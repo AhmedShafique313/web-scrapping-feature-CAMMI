@@ -1,8 +1,8 @@
 version = 0.1
 
 [default.global.parameters]
-stack_name = "web-scraper-stack"
-region = "ap-south-1"
+stack_name = "web-scrapping-feature-CAMMI"
+region = "us-east-1"
 
 [default.build.parameters]
 cached = true
