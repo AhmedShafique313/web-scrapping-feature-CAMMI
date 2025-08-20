@@ -39,6 +39,7 @@ jobs:
 
       - name: Build SAM app
         run: sam build
+        working-directory: base
 
       - name: Deploy SAM app
         run: |
