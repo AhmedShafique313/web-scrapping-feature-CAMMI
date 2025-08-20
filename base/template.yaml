@@ -24,12 +24,13 @@ Resources:
       FunctionName: web-scraper-func
       CodeUri: web-scrapping/
       Handler: app.lambda_handler
+      PackageType: Zip
       Environment:
         Variables:
           HYPERBROWSER_API_KEY: !Ref HyperbrowserApiKey
           HF_TOKEN: !Ref HuggingFaceToken
-      Layers:
-        - !Ref DependenciesLayer
+      # Layers:
+      #   - !Ref DependenciesLayer
       FunctionUrlConfig:
         AuthType: NONE
         Cors:
@@ -39,14 +40,14 @@ Resources:
             - GET
             - POST
 
-  DependenciesLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: scraper-dependencies
-      ContentUri: layer/
-      CompatibleRuntimes:
-        - python3.11
-      RetentionPolicy: Delete
+  # DependenciesLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Properties:
+  #     LayerName: scraper-dependencies
+  #     ContentUri: layer/
+  #     CompatibleRuntimes:
+  #       - python3.13
+  #     RetentionPolicy: Delete
 
 Outputs:
   LambdaFunctionUrl:
