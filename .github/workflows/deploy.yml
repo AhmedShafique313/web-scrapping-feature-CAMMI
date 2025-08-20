@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies into layer
         run: |
           mkdir -p layer/python
-          pip install -r requirements.txt -t layer/python
+          pip install hyperbrowser python-dotenv huggingface_hub -t layer/python
 
       - name: Build SAM app
         run: sam build --use-container
