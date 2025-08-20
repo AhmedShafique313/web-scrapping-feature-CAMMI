@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  web-scraper-stack
+
+Globals:
+  Function:
+    Timeout: 900           # max 15 min for long scraping
+    MemorySize: 1024       # adjust if needed
+    Runtime: python3.13
+
+Parameters:
+  HyperbrowserApiKey:
+    Type: String
+    Description: API Key for Hyperbrowser
+  HuggingFaceToken:
+    Type: String
+    Description: API Token for HuggingFace
+
+Resources:
+  ScraperFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: web-scraper-func
+      CodeUri: web-scrapping/
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          HYPERBROWSER_API_KEY: !Ref HyperbrowserApiKey
+          HF_TOKEN: !Ref HuggingFaceToken
+      Layers:
+        - !Ref DependenciesLayer
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins:
+            - "*"
+          AllowMethods:
+            - GET
+            - POST
+
+  DependenciesLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: scraper-dependencies
+      ContentUri: layer/
+      CompatibleRuntimes:
+        - python3.11
+      RetentionPolicy: Delete
+
+Outputs:
+  LambdaFunctionUrl:
+    Description: "Public Lambda Function URL"
+    Value: !GetAtt ScraperFunction.FunctionUrl
