@@ -47,3 +47,4 @@ jobs:
             --parameter-overrides \
               HyperbrowserApiKey=${{ secrets.HYPERBROWSER_API_KEY }} \
               HuggingFaceToken=${{ secrets.HF_TOKEN }}
+        working-directory: base
